@@ -5,7 +5,7 @@ as adding an attribute to the input field.
 
 ```html
 <input type="text" data-mapeditor="point" />
-<input type="text" data-mapeditor="area" />
+<input type="text" data-mapeditor="polygon" />
 ```
 
 // TODO: improve readme
