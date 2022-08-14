@@ -2,39 +2,37 @@ class Editor {
   constructor(rootEl, workspaceEl) {
     this.rootEl = rootEl;
     this.workspaceEl = workspaceEl;
+    this.open = this.open.bind(this);
+    this.close = this.close.bind(this);
   }
 
-  open = ({ value, mode, callback }) => {
+  open({ value, mode, callback }) {
     this.rootEl.classList.add("open");
 
     if (!this.map) {
-      this.__createMap();
+      this.map = L.map(this.workspaceEl).setView([51.505, -0.09], 13);
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: "© OpenStreetMap",
+      }).addTo(this.map);
     }
 
     this.value = value;
     this.callbackFn = callback;
     this.disposeFn = mode.setUp(this);
-  };
+  }
 
-  close = () => {
+  close(fireCallback) {
     if (typeof this.disposeFn === "function") {
       this.disposeFn();
     }
-    if (typeof this.callbackFn === "function") {
+    if (fireCallback && typeof this.callbackFn === "function") {
       this.callbackFn(this.value);
     }
 
     this.callback = this.value = this.destroyEditor = null;
     this.rootEl.classList.remove("open");
-  };
-
-  __createMap() {
-    this.map = L.map(this.workspaceEl).setView([51.505, -0.09], 13);
-
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 19,
-      attribution: "© OpenStreetMap",
-    }).addTo(this.map);
   }
 }
 
@@ -50,11 +48,22 @@ function createEditor() {
   const editorWindow = editorRoot.appendChild(document.createElement("div"));
   editorWindow.classList.add("MapEditor-window");
 
+  const toolbar = editorWindow.appendChild(document.createElement("div"));
+  toolbar.classList.add("MapEditor-toolbar");
+
+  const saveBtn = toolbar.appendChild(document.createElement("button"));
+  saveBtn.innerText = "Save changes";
+
+  const cancelBtn = toolbar.appendChild(document.createElement("button"));
+  cancelBtn.innerText = "Cancel";
+
   const map = editorWindow.appendChild(document.createElement("div"));
   map.classList.add("MapEditor-map");
 
   const editor = new Editor(editorRoot, map);
-  editorBg.addEventListener("click", editor.close);
+  editorBg.addEventListener("click", () => editor.close(false));
+  saveBtn.addEventListener("click", () => editor.close(true));
+  cancelBtn.addEventListener("click", () => editor.close(false));
 
   return (window.__MapEditor__ = editor);
 }
