@@ -15,7 +15,15 @@
       if (!this.map) {
         this.map = L.map(this.workspaceEl).setView([51.505, -0.09], 13);
 
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        let tilesUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+        if (
+          "MapEditorOptions" in window &&
+          "tiles" in window.MapEditorOptions
+        ) {
+          tilesUrl = window.MapEditorOptions.tiles;
+        }
+
+        L.tileLayer(tilesUrl, {
           maxZoom: 19,
           attribution: "© OpenStreetMap",
         }).addTo(this.map);
