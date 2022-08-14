@@ -1,4 +1,6 @@
 !(function () {
+  const defaultZoom = 15;
+
   class Editor {
     constructor(rootEl, workspaceEl) {
       this.rootEl = rootEl;
@@ -110,7 +112,7 @@
           draggable: true,
         }).addTo(editor.map);
 
-        editor.map.setView(pos, 8);
+        editor.map.setView(pos, defaultZoom);
 
         marker.on("moveend", () => {
           const center = marker.getLatLng();
@@ -125,7 +127,7 @@
       },
     },
 
-    area: {
+    polygon: {
       /**
        * @param {L.LatLngLiteral} value
        * @returns {string}
