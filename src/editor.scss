@@ -1,0 +1,42 @@
+%fill {
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.MapEditor {
+  @extend %fill;
+
+  position: fixed;
+  z-index: 999;
+
+  display: none;
+  &.open {
+    display: block;
+  }
+
+  .MapEditor-background {
+    @extend %fill;
+
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  .MapEditor-window {
+    background-color: #fff;
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 90%;
+    width: 640px;
+    max-height: 90%;
+    height: 480px;
+  }
+  .MapEditor-map {
+    @extend %fill;
+
+    position: absolute;
+  }
+}

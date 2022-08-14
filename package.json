@@ -1,0 +1,12 @@
+{
+  "name": "mapeditor.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "sass --watch src/editor.scss dist/editor.css"
+  },
+  "devDependencies": {
+    "@types/leaflet": "^1.7.11",
+    "@types/leaflet-draw": "^1.0.5",
+    "sass": "^1.54.4"
+  }
+}
