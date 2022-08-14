@@ -207,9 +207,9 @@
     },
   };
 
-  document.querySelectorAll("[data-mapeditor]").forEach((el) => {
-    const editor = createEditor();
+  const editor = createEditor();
 
+  document.querySelectorAll("[data-mapeditor]").forEach((el) => {
     const editorModeName = el.getAttribute("data-mapeditor");
     const editorMode = MapEditorModes[editorModeName];
     if (!editorMode) {
