@@ -13,7 +13,9 @@
       this.rootEl.classList.add("open");
 
       if (!this.map) {
-        this.map = L.map(this.workspaceEl).setView([51.505, -0.09], 13);
+        this.map = L.map(this.workspaceEl, {
+          fullscreenControl: true,
+        }).setView([51.505, -0.09], 13);
 
         let tilesUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
         if (
